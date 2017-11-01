@@ -13,9 +13,8 @@
               <p class="title is-5">{{ cryptoCurrency.name }}</p>
               <p class="title price-title is-5">
                 <span class="price">{{ getPriceEUR(cryptoCurrency) }} €</span>
-                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}% 
-                  <icon class="arrow-up" name="arrow-up" height="9" width="9"></icon>
-                  <icon class="arrow-down" name="arrow-down" height="9" width="9"></icon>
+                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}">
+                  {{ getPercentChange(cryptoCurrency) }}% 
                 </span>
               </p>
             </div>
@@ -36,9 +35,8 @@
               <p class="title is-5">{{ cryptoCurrency.name }}</p>
               <p class="title price-title is-5">
                 <span class="price">{{ getPriceEUR(cryptoCurrency) }} €</span>
-                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}% 
-                  <icon class="arrow-up" name="arrow-up" height="9" width="9"></icon>
-                  <icon class="arrow-down" name="arrow-down" height="9" width="9"></icon>
+                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}">
+                  {{ getPercentChange(cryptoCurrency) }}% 
                 </span>
               </p>
             </div>
@@ -124,12 +122,6 @@ $large: 1024px;
           margin: 0 auto;
         }
       }
-    }
-  }
-
-  .card-image-iframe {
-    .image {
-      top: -23px;
     }
   }
 

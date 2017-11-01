@@ -10,7 +10,7 @@
         </div>
         <div class="nav-right">
           <div class="nav-item">
-            My wallets soon
+            <dash-wallets></dash-wallets>
           </div>
         </div>
       </div>
@@ -19,8 +19,13 @@
 </template>
 
 <script>
+import DashWallets from './DashWallets'
+
 export default {
-  name: 'dashHeader'
+  name: 'dashHeader',
+  components: {
+    DashWallets
+  }
 }
 </script>
 
