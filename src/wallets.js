@@ -13,16 +13,16 @@ export const wallets = [
     name: 'ethereum',
     sym: 'eth',
     address: '0xCC0832FAD9Aa299e2266Cbc44c0DD1D59f60a590',
-    resolver: '',
-    opt: '',
+    resolver: 'https://api.blockcypher.com/v1/eth/main/addrs/',
+    opt: '/balance',
     amount: 0
   },
   {
     id: 3,
     name: 'bitcoin-cash',
-    sym: 'bcc',
+    sym: 'bch',
     address: '17PMG21hL8osrLDxa6mYugcgqmUcDodPSh',
-    resolver: '',
+    resolver: 'https://blockdozer.com/insight-api/addr/',
     opt: '',
     amount: 0
   },
@@ -31,16 +31,7 @@ export const wallets = [
     name: 'ripple',
     sym: 'xrp',
     address: 'rGcTFgF2inTfEshvZPsuWWMMtfvJqAP7EZ',
-    resolver: '',
-    opt: '',
-    amount: 0
-  },
-  {
-    id: 5,
-    name: 'litecoin',
-    sym: 'ltc',
-    address: 'MJY8Ukfx7JVNFg8ojUnesqfuDzbfA2ecke',
-    resolver: '',
+    resolver: 'https://data.ripple.com/v2/accounts/',
     opt: '',
     amount: 0
   }

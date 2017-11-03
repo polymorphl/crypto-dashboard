@@ -2,7 +2,7 @@
   <div>
     <div class="dash-wallets colums">
       <div class="container">
-        <dash-wallet class="column" v-for="wallet in wallets" :key="wallet.id" v-bind:wallet="wallet"></dash-wallet>
+        <dash-wallet class="column" v-for="wallet in sharedState.wallets" :key="wallet.id" v-bind:wallet="wallet"></dash-wallet>
       </div>
     </div>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 import DashWallet from './DashWallet'
-import { wallets } from '../wallets'
+import { store } from '../store.js'
 
 export default {
   name: 'dashWallets',
@@ -19,7 +19,7 @@ export default {
   },
   data () {
     return {
-      wallets: wallets
+      sharedState: store.state
     }
   }
 }

@@ -27,5 +27,6 @@ new Vue({
   created () {
     store.getCryptoCurrencies()
     store.getTotalMarketCapEUR()
+    store.resolveWallets()
   }
 })

@@ -11,23 +11,8 @@
 export default {
   name: 'dashWallet',
   props: ['wallet'],
-  created () {
-    this.resolveWalletAmount()
-  },
-  methods: {
-    resolveWalletAmount () {
-      if (this.wallet.resolver) {
-        this.axios.get(`${this.wallet.resolver}${this.wallet.address}${this.wallet.opt}`)
-        .then(response => {
-          if (this.wallet.sym === 'btc') {
-            this.wallet.amount = response.data.balance
-          } else if (this.wallet.sym === 'eth') {
-            console.log(response)
-          }
-        })
-      }
-    }
-  }
+  created () {},
+  methods: {}
 }
 </script>
 

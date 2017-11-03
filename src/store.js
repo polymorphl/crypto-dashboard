@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { wallets } from './wallets'
 
 Vue.use(VueAxios, axios)
 
+const BigNumber = require('bignumber.js')
 const cryptoCurrencyData = require('./cryptocurrency-data.json')
 
 export const store = {
   state: {
     totalMarketCapEUR: 0,
-    cryptoCurrencies: []
+    cryptoCurrencies: [],
+    wallets: wallets
   },
   getCryptoCurrencies () {
     const getUrl = 'https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=10'
@@ -35,5 +38,29 @@ export const store = {
       const globalData = response.data
       this.state.totalMarketCapEUR = globalData.total_market_cap_eur
     })
+  },
+  resolveWallets () {
+    this.state.wallets.forEach((wallet) => {
+      wallet = this.resolveWalletAmount(wallet)
+    })
+  },
+  resolveWalletAmount (wallet) {
+    if (wallet.resolver) {
+      axios.get(`${wallet.resolver}${wallet.address}${wallet.opt}`)
+      .then(response => {
+        if (wallet.sym === 'btc') {
+          wallet.amount = response.data.balance
+        } else if (wallet.sym === 'eth') {
+          wallet.amount = new BigNumber(response.data.balance, 10).mul(1).round(0, BigNumber.ROUND_DOWN).div(1000000000000000000).toString(10)
+        } else if (wallet.sym === 'bch') {
+          wallet.amount = response.data.balance
+        } else if (wallet.sym === 'xrp') {
+          wallet.amount = response.data.account_data.initial_balance
+        } else {
+          wallet.amount = '??'
+        }
+        return wallet
+      })
+    }
   }
 }
