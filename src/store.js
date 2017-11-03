@@ -59,6 +59,8 @@ export const store = {
         } else {
           wallet.amount = '??'
         }
+        // fix amount precision
+        if (parseFloat(wallet.amount)) wallet.amount = Number(wallet.amount).toFixed(2)
         return wallet
       })
     }

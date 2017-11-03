@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import 'vue-awesome/icons'
+// import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 
 import App from './App'

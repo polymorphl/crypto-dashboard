@@ -2,24 +2,23 @@
   <div class="columns selected-section">
       <router-link to="/" class="nav-item">
         <div class="return-action">
-          <icon name="chevron-left" class="arrow-left" height="22" width="22"></icon>
           <p class="return-text">Retour</p>
         </div>
       </router-link>
       <div class="column is-7 image-section">
-        <img :src="`/static/${selectedCryptoCurrency.id}_logo.png`" class="cryptoCurrency-image" />
+        <img v-if="selectedCryptoCurrency.id" :src="`/static/${selectedCryptoCurrency.id}_logo.png`" class="cryptoCurrency-image" />
         <h1 class="cryptoCurrency-title">{{ selectedCryptoCurrency.name }}</h1>
-        <span class="tag is-primary">Rank {{ selectedCryptoCurrency.rank}}</span>
+        <span class="tag is-primary">Rang {{ selectedCryptoCurrency.rank}}</span>
         <p class="cryptoCurrency-description">{{ selectedCryptoCurrency.description }}</p>
         <div class="icons-section">
           <span v-if="selectedCryptoCurrency.website" class="icon">
-            <a :href="selectedCryptoCurrency.website" target="_blank"><icon name="link" scale="1.5"></icon></a>
+            <a :href="selectedCryptoCurrency.website" target="_blank">website</a>
           </span>
           <span v-if="selectedCryptoCurrency.paper" class="icon">
-            <a :href="selectedCryptoCurrency.paper" target="_blank"><icon name="file-text" scale="1.5"></icon></a>
+            <a :href="selectedCryptoCurrency.paper" target="_blank">paper</icon></a>
           </span>
           <span v-if="selectedCryptoCurrency.github" class="icon">
-            <a :href="selectedCryptoCurrency.github" target="_blank"><icon name="github" scale="1.5"></icon></a>
+            <a :href="selectedCryptoCurrency.github" target="_blank">github</a>
           </span>
         </div>
       </div>
@@ -28,12 +27,7 @@
           <div class="control">
             <button class="button" type="button" @click="toggleDropDown">
               {{ selectedFiatCurrency }}
-              <span class="arrow-icon">
-                <icon v-if="!dropDownOpen" name="caret-down" height="13"></icon>
-                <icon v-if="dropDownOpen" name="caret-up" height="13"></icon>
-              </span>
             </button>
-
             <div class="box dropdown" :class="{'is-open': dropDownOpen }">
               <ul>
                 <li v-for="fiatCurrency in fiatCurrencies" :key="fiatCurrency.id">
@@ -56,15 +50,22 @@
             <span :class="{'positive-percent-change': selectedCryptoCurrency.positivePercentChange, 'negative-percent-change': !selectedCryptoCurrency.positivePercentChange}">
               ({{ selectedCryptoCurrency.percentChange24h }}%)
               <sub>
-                <a class="is-primary percent-tooltip tooltip"><icon name="info-circle" height="15" width="15"></icon>
+                <a class="is-primary percent-tooltip tooltip">
                   <span class="tooltiptext">variation sur 24h en pourcentage</span>
                 </a>
               </sub>
             </span>
           </p>
         </div>
+         <div class="price-section" v-if="selectedCryptoCurrency.balance">
+          <p class="price-tag">Nombre de pièce(s)</p>
+          <p class="price-amount">
+            {{ selectedCryptoCurrency.balance }} {{ selectedCryptoCurrency.symbol }}
+            <span v-if="selectedCryptoCurrency.valuefiat" class="valuefiat">({{ selectedFiatCurrency }} {{ selectedCryptoCurrency.valuefiat }})</span>
+          </p>
+        </div>
         <div class="price-section">
-          <p class="price-tag">Nombre de coin en circulation</p>
+          <p class="price-tag">Nombre de pièce(s) en circulation</p>
           <p class="price-amount">{{ selectedCryptoCurrency.selectedSupply }} {{ selectedCryptoCurrency.symbol }}</p>
         </div>
         <div class="price-section">
@@ -111,7 +112,7 @@ export default {
       dropDownOpen: false
     }
   },
-  created () {
+  mounted () {
     this.selectCryptoCurrency()
   },
   watch: {
@@ -138,7 +139,7 @@ export default {
     selectCryptoCurrency () {
       let cryptoCurrency
       if (this.sharedState.cryptoCurrencies.length === 0 || !this.sharedState.cryptoCurrencies) {
-        this.axios.get(`https://api.coinmarketcap.com/v1/ticker/${this.$route.params.id}/`)
+        this.axios.get(`https://api.coinmarketcap.com/v1/ticker/${this.$route.params.id}/?convert=${this.selectedFiatCurrency}`)
           .then(response => {
             cryptoCurrency = response.data[0]
             cryptoCurrency = this.manipulateCryptoCurrency(cryptoCurrency)
@@ -158,12 +159,27 @@ export default {
           this.toggleDropDown()
           this.selectedCryptoCurrency.selectedPrice = Number(cryptoCurrency.data[0]['price_' + this.selectedFiatCurrency.toLowerCase()]).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
           this.selectedCryptoCurrency.selectedMarketCap = Number(cryptoCurrency.data[0]['market_cap_' + this.selectedFiatCurrency.toLowerCase()]).toLocaleString()
+          if (this.selectedCryptoCurrency.balance) {
+            console.log(typeof this.selectedCryptoCurrency.balance, typeof this.selectedCryptoCurrency.selectedPrice)
+            this.selectedCryptoCurrency.valuefiat = parseFloat(this.selectedCryptoCurrency.balance.replace(',', '.')) * parseFloat(this.selectedCryptoCurrency.selectedPrice.replace(',', '.'))
+          }
         })
+    },
+    resolveWallet (sym) {
+      const wallet = this.sharedState.wallets.filter((wallet) => {
+        return wallet.sym === sym
+      })
+      return wallet ? wallet[0] : 0
     },
     manipulateCryptoCurrency (cryptoCurrency) {
       cryptoCurrency.selectedPrice = Number(cryptoCurrency.price_eur).toFixed(2)
       cryptoCurrency.selectedSupply = Number(cryptoCurrency.available_supply).toLocaleString()
       cryptoCurrency.selectedMarketCap = Number(cryptoCurrency.market_cap_eur).toLocaleString()
+      const wallet = this.resolveWallet(cryptoCurrency.symbol.toLowerCase())
+      if (wallet && wallet.amount) {
+        cryptoCurrency.balance = wallet.amount
+        cryptoCurrency.valuefiat = cryptoCurrency.balance * cryptoCurrency.selectedPrice
+      }
       return cryptoCurrency
     },
     addImageAndDescription (cryptoCurrency) {
