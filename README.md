@@ -2,10 +2,9 @@
 
 > Personal Crypto Dashboard
 
-
 # Demo
 
-[Link](https://dist-rfrmezthzq.now.sh/) 
+[Link](https://dist-trtjvplvzj.now.sh) 
 
 
 ## Build Setup
