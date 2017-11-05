@@ -57,7 +57,7 @@ export const store = {
         } else if (wallet.sym === 'xrp') {
           wallet.amount = response.data.account_data.initial_balance
         } else {
-          wallet.amount = '??'
+          wallet.amount = 0
         }
         // fix amount precision
         if (parseFloat(wallet.amount)) wallet.amount = Number(wallet.amount).toFixed(2)

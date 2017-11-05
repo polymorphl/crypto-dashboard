@@ -1,9 +1,11 @@
 <template>
   <div class="dash-wallet">
-    <div class="image tooltip">
-      <img :src="`/static/${wallet.name}_logo.png`">
-    </div>
-    <span class="amount">{{wallet.amount}}</span>
+    <router-link class="column" :to="`/${wallet.name}`">
+      <div class="image">
+        <img :src="`/static/${wallet.name}_logo.png`">
+      </div>
+      <span class="amount">{{wallet.amount}}</span>
+    </router-link>
   </div>
 </template>
 
@@ -21,6 +23,7 @@ export default {
     background-color: #fff;
     color: black;
     display: inline-block;
+    transition: all .3s;
 
     .image {
       display: inline-block;
@@ -30,6 +33,14 @@ export default {
         max-width: 100%;
         height: auto;
         display: block;
+      }
+    }
+
+    &:hover {
+      background-color: black;
+      
+      a {
+        color: white;
       }
     }
   }

@@ -34,5 +34,14 @@ export const wallets = [
     resolver: 'https://data.ripple.com/v2/accounts/',
     opt: '',
     amount: 0
+  },
+  {
+    id: 5,
+    name: 'vertcoin',
+    sym: 'vtc',
+    address: '34L7L92cQqwiNAKMhuB5xZjLYZkkeyPuYR',
+    resolver: 'https://explorer.vertcoin.org/ext/getbalance/',
+    opt: '',
+    amount: 0
   }
 ]

@@ -166,7 +166,13 @@
      "website": "https://www.stellar.org/",
      "paper": "https://www.stellar.org/papers/stellar-consensus-protocol.pdf",
      "github": "https://github.com/stellar"
-  },  
+  },
+  "vertcoin": {
+    "description": "Vertcoin is a decentralized currency owned by its users",
+    "website": "https://vertcoin.org/",
+    "paper": "https://trello.com/b/RbsKPeGw/vertcoin-roadmap",
+    "github": "https://github.com/vertcoin/vertcoin"
+ },  
   "undefined": {
      "description": "Hmmm. Though the price, circulating supply and market cap values are accurate - there doesn't appear to be any detailed data captured on this cryptocurrency. Should be updated in due time!",
      "website": "",

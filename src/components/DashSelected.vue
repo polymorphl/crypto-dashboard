@@ -229,6 +229,7 @@ $large: 1024px;
     position: relative;
     .cryptoCurrency-image {
       height: 200px;
+      transform: scale(2);
       -webkit-animation-name: spinner; 
       -webkit-animation-timing-function: linear; 
       -webkit-animation-iteration-count: infinite; 

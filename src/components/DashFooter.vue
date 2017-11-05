@@ -6,9 +6,6 @@
           <ul class="wallet-list">
             <li>BTC 3LrsKdgAEJkBYyUdfofvnK8D2vQkKPoGMs</li>
             <li>Ξ 0xCC0832FAD9Aa299e2266Cbc44c0DD1D59f60a590</li>
-            <li></li>
-            <li></li>
-            <li></li>
           </ul>
         </p>
       </div>
